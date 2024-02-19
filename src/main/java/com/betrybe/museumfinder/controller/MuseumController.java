@@ -16,17 +16,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The type Museum controller.
+ */
 @RestController
 @RequestMapping("/museums")
 public class MuseumController {
 
   private final MuseumServiceInterface museumService;
 
+  /**
+   * Instantiates a new Museum controller.
+   *
+   * @param museumService the museum service
+   */
   @Autowired
   public MuseumController(MuseumServiceInterface museumService) {
     this.museumService = museumService;
   }
 
+  /**
+   * Create museum response entity.
+   *
+   * @param museumCreationDto the museum creation dto
+   * @return the response entity
+   */
   @PostMapping
   public ResponseEntity<Museum> createMuseum(@RequestBody MuseumCreationDto museumCreationDto) {
     Museum createdMuseum = museumService.createMuseum(
@@ -36,6 +50,14 @@ public class MuseumController {
     return ResponseEntity.status(HttpStatus.CREATED).body(createdMuseum);
   }
 
+  /**
+   * Gets closest museum.
+   *
+   * @param latitude    the latitude
+   * @param longitude   the longitude
+   * @param maxDistance the max distance
+   * @return the closest museum
+   */
   @GetMapping("/closest")
   public ResponseEntity<MuseumDto> getClosestMuseum(
       @RequestParam("lat") Double latitude,
